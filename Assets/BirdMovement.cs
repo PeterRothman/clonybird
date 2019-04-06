@@ -10,6 +10,8 @@ public class BirdMovement : MonoBehaviour {
 	bool didFlap = false;
     bool up;
     bool down;
+    bool left;
+    bool right;
 
 	Animator animator;
 
@@ -51,6 +53,14 @@ public class BirdMovement : MonoBehaviour {
 		    {
 		        down = true;
 		    }
+		    if (Input.GetKey(KeyCode.LeftArrow))
+		    {
+		        left = true;
+		    }
+		    if (Input.GetKey(KeyCode.RightArrow))
+		    {
+		        right = true;
+		    }
         }
 	}
 
@@ -66,6 +76,10 @@ public class BirdMovement : MonoBehaviour {
 	    pos.x += forwardSpeed * Time.deltaTime;
 	    transform.position = pos;
 
+	    Vector3 cameraPos = Camera.main.transform.position;
+	    cameraPos.x += forwardSpeed * Time.deltaTime;
+	    Camera.main.transform.position = cameraPos;
+
         animator.SetTrigger("DoFlap");
 
 	    if (up)
@@ -77,7 +91,7 @@ public class BirdMovement : MonoBehaviour {
 
             up = false;
 	    }
-	    else if (down)
+	    if (down)
 	    {
 
 	        pos = transform.position;
@@ -85,6 +99,25 @@ public class BirdMovement : MonoBehaviour {
 	        transform.position = pos;
 
 	        down = false;
+	    }
+	    if (left)
+	    {
+
+	        pos = transform.position;
+	        pos.x -= forwardSpeed * Time.deltaTime;
+	        transform.position = pos;
+
+	        left = false;
+	    }
+
+	    if (right)
+	    {
+
+	        pos = transform.position;
+	        pos.x += forwardSpeed * Time.deltaTime;
+	        transform.position = pos;
+
+	        right = false;
 	    }
 
         //if (didFlap) {
